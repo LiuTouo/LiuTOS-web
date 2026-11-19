@@ -117,7 +117,7 @@ function MouseLab() {
       const active = accel ? ACCEL : HAND
       const ghost = accel ? HAND : ACCEL
 
-      ctx.strokeStyle = 'rgba(230,237,234,0.24)'
+      ctx.strokeStyle = 'rgba(223,230,226,0.24)'
       ctx.lineWidth = 1
       ctx.beginPath()
       ghost.forEach((p, i) => {
