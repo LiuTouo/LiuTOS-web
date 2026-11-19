@@ -15,7 +15,13 @@ npm run preview
 
 ## 部署
 
-推上 `main` 後 `.github/workflows/pages.yml` 會自動 build 並發佈。repo Settings → Pages → Source 需設為 **GitHub Actions**。
+```bash
+npm run deploy
+```
+
+`scripts/deploy.mjs` 會 build、把 `dist` 與 `.nojekyll` 複製到暫存目錄，再以強制推送更新 `gh-pages` 分支。Pages 來源設為 **Deploy from a branch: gh-pages / (root)**。
+
+原本規劃用 GitHub Actions，但該帳號的 Actions 目前因帳務問題被鎖，任何 workflow 都不會啟動，所以改走分支部署。帳務處理完後可改回 Actions：把 Pages Source 改成 GitHub Actions，補回 deploy workflow 即可，`vite.config.js` 不用動。
 
 ## 改內容
 
@@ -26,7 +32,6 @@ npm run preview
 | 價目數字、加購單價 | `src/content.js` 的 `PRICES` |
 | Discord 帳號 | `src/content.js` 的 `DISCORD_USER` |
 | 色票、字體、間距、動效 | `src/styles.css` 開頭的 `:root` |
-
 加購單價目前是 `null`，畫面顯示「單價另計」；填入數字後票卡與預約訊息會自動帶入。
 
 ## 設計約束

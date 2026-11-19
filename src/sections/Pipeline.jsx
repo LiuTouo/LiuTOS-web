@@ -193,14 +193,16 @@ export default function Pipeline() {
                         ))}
                       </ol>
                     ) : null}
-                    <dl className="facts">
-                      {(FACTS[lang]?.[step.code] ?? []).map(([k, v]) => (
-                        <div key={k}>
-                          <dt>{k}</dt>
-                          <dd>{v}</dd>
-                        </div>
-                      ))}
-                    </dl>
+                    {!step.tags && !step.list ? (
+                      <dl className="facts">
+                        {(FACTS[lang]?.[step.code] ?? []).map(([k, v]) => (
+                          <div key={k}>
+                            <dt>{k}</dt>
+                            <dd>{v}</dd>
+                          </div>
+                        ))}
+                      </dl>
+                    ) : null}
                   </article>
                 )
               })}
