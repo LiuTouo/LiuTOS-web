@@ -34,26 +34,31 @@ export default function Hero({ delay = 0.1 }) {
       )
 
       gsap.to('.hero-log', {
-        yPercent: -14,
+        yPercent: -26,
         ease: 'none',
         scrollTrigger: { trigger: root.current, start: 'top top', end: 'bottom top', scrub: 0.6 }
       })
       gsap.to('.hero h1', {
-        yPercent: 14,
-        scale: 0.93,
+        yPercent: 22,
+        scale: 0.9,
         letterSpacing: '-0.06em',
-        opacity: 0.3,
+        opacity: 0.55,
         ease: 'none',
         scrollTrigger: { trigger: root.current, start: 'top top', end: 'bottom top', scrub: 0.6 }
       })
-      gsap.to('.hero-lead', {
-        yPercent: -18,
-        opacity: 0.4,
-        ease: 'none',
-        scrollTrigger: { trigger: root.current, start: 'top top', end: 'bottom top', scrub: 0.4 }
-      })
+      gsap.fromTo(
+        '.hero-lead',
+        { opacity: 1, yPercent: 0 },
+        {
+          yPercent: -30,
+          opacity: 0.82,
+          ease: 'none',
+          immediateRender: false,
+          scrollTrigger: { trigger: root.current, start: 'top top', end: 'bottom top', scrub: 0.4 }
+        }
+      )
       gsap.to('.hero-stats', {
-        yPercent: -34,
+        yPercent: -48,
         ease: 'none',
         scrollTrigger: { trigger: root.current, start: 'top top', end: 'bottom top', scrub: 0.3 }
       })

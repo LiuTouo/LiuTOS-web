@@ -5,8 +5,8 @@
   --line: rgba(200, 228, 214, 0.12);
   --line-2: rgba(200, 228, 214, 0.24);
   --text: #e2e8e4;
-  --dim: #97a29c;
-  --dim-2: #6c7872;
+  --dim: #adb8b2;
+  --dim-2: #8b978f;
   --mint: #95e6bd;
   --pale: #cfe9dd;
   --sans: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", system-ui, sans-serif;
@@ -1112,7 +1112,7 @@ svg {
 }
 
 .type-lab .layer-a {
-  color: #b3beba;
+  color: #c2ccc7;
   -webkit-font-smoothing: none;
   text-rendering: optimizeSpeed;
   letter-spacing: 0;
@@ -1562,7 +1562,7 @@ svg {
 
 .field input::placeholder,
 .field textarea::placeholder {
-  color: #6f7a75;
+  color: #808d86;
 }
 
 .form-actions {
