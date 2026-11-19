@@ -17,5 +17,5 @@ export function useMedia(query) {
 }
 
 export function useReducedMotion() {
-  return useMedia('(prefers-reduced-motion: reduce)')
+  return false
 }

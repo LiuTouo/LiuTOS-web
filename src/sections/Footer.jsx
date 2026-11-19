@@ -2,6 +2,13 @@ import { useSite } from '../site.jsx'
 import { DISCORD_URL } from '../content.js'
 import Wordmark from '../components/Wordmark.jsx'
 
+const replay = () => {
+  try {
+    sessionStorage.removeItem('liutos-booted')
+  } catch {}
+  window.location.reload()
+}
+
 export default function Footer() {
   const { t } = useSite()
   const c = t.footer
@@ -23,6 +30,9 @@ export default function Footer() {
         </div>
         <div className="meta mono">
           <span>© {new Date().getFullYear()} LiuTOS</span>
+          <button type="button" className="replay" onClick={replay}>
+            {c.replay}
+          </button>
           <span>
             {c.contact}:{' '}
             <a href={DISCORD_URL} target="_blank" rel="noreferrer">

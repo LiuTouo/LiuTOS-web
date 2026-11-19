@@ -1,7 +1,6 @@
 import { useEffect, useRef } from 'react'
 import gsap from 'gsap'
 import { useSite } from '../site.jsx'
-import { useReducedMotion } from '../lib/useMedia.js'
 
 const LINES = [
   'hardware and storage check',
@@ -17,10 +16,9 @@ const KEY = 'liutos-booted'
 
 export default function Boot({ onDone }) {
   const { t } = useSite()
-  const reduced = useReducedMotion()
   const show = (() => {
     try {
-      return !reduced && sessionStorage.getItem(KEY) !== '1'
+      return sessionStorage.getItem(KEY) !== '1'
     } catch {
       return false
     }
@@ -52,7 +50,7 @@ export default function Boot({ onDone }) {
       tl.add(finish, 1.12)
     }, root)
     return () => ctx.revert()
-  }, [show, reduced, onDone])
+  }, [show, onDone])
 
   useEffect(() => {
     if (!show) return

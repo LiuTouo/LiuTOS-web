@@ -355,7 +355,8 @@ export const content = {
       line: '十道工序，一次交機。',
       disclaimer:
         '本頁描述交機後的設定方向與實測值。效能與體感差異依硬體、遊戲與驅動版本而異，不做保證。',
-      contact: 'Discord'
+      contact: 'Discord',
+      replay: '重播開場'
     },
     labels: {
       expand: '展開內容',
@@ -707,7 +708,8 @@ export const content = {
       line: 'Ten stages. One handover.',
       disclaimer:
         'This page describes the settings shipped and their measured values. Performance and feel vary by hardware, title and driver version. No guarantee is made.',
-      contact: 'Discord'
+      contact: 'Discord',
+      replay: 'Replay intro'
     },
     labels: {
       expand: 'Show details',

@@ -1837,18 +1837,6 @@ body:has(.ticket-bar.is-open) .foot {
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.001ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.001ms !important;
-  }
-}
 
 .progress {
   position: fixed;
@@ -1937,10 +1925,6 @@ body:has(.ticket-bar.is-open) .foot {
   content: "›";
   color: var(--mint);
   margin-right: 0.55rem;
-}
-
-body.is-booting {
-  overflow: hidden;
 }
 
 .marquee {
@@ -2070,14 +2054,6 @@ body.is-booting {
   cursor: none;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .mask-inner {
-    transform: none !important;
-  }
-  .marquee-track {
-    transform: none !important;
-  }
-}
 
 .section,
 .pipe,
@@ -2159,4 +2135,18 @@ body.is-booting {
 .boot-inner {
   position: relative;
   z-index: 1;
+}
+
+.replay {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  color: var(--dim-2);
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 0.1rem;
+  transition: color 0.2s var(--ease), border-color 0.2s var(--ease);
+}
+
+.replay:hover {
+  color: var(--mint);
+  border-color: var(--line-2);
 }

@@ -3,8 +3,7 @@ import Lenis from 'lenis'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { SiteProvider, useSite } from './site.jsx'
-import { setLenis } from './lib/scroll.js'
-import { useReducedMotion } from './lib/useMedia.js'
+import { scrollToY, setLenis } from './lib/scroll.js'
 import Boot from './components/Boot.jsx'
 import Cursor from './components/Cursor.jsx'
 import Motion from './components/Motion.jsx'
@@ -24,10 +23,8 @@ import TicketBar from './sections/TicketBar.jsx'
 gsap.registerPlugin(ScrollTrigger)
 
 function Shell() {
-  const reduced = useReducedMotion()
   const { lang } = useSite()
   const [booted, setBooted] = useState(() => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return true
     try {
       return sessionStorage.getItem('liutos-booted') === '1'
     } catch {
@@ -37,8 +34,19 @@ function Shell() {
   const onBootDone = useCallback(() => setBooted(true), [])
 
   useEffect(() => {
+    const id = window.location.hash.slice(1)
+    if (!id) return
+    const t = setTimeout(() => {
+      const target = document.getElementById(id)
+      if (target) scrollToY(target.getBoundingClientRect().top + window.scrollY - 20)
+    }, 260)
+    return () => clearTimeout(t)
+  }, [])
+
+  useEffect(() => {
     if (booted) {
       document.body.classList.remove('is-booting')
+      requestAnimationFrame(() => window.dispatchEvent(new Event('liutos:refresh')))
       return
     }
     document.body.classList.add('is-booting')
@@ -49,7 +57,7 @@ function Shell() {
   useEffect(() => {
     const fine = window.matchMedia('(pointer: fine)').matches
     const wide = window.matchMedia('(min-width: 900px)').matches
-    if (reduced || !fine || !wide) {
+    if (!fine || !wide) {
       setLenis(null)
       return
     }
@@ -67,7 +75,7 @@ function Shell() {
       lenis.destroy()
       setLenis(null)
     }
-  }, [reduced])
+  }, [])
 
   useEffect(() => {
     const refresh = () => ScrollTrigger.refresh()
