@@ -232,10 +232,38 @@ function TextLab() {
   const { t } = useSite()
   const c = t.demos.text
   const [split, setSplit] = useState(52)
+  const lab = useRef(null)
+  const dragging = useRef(false)
+
+  const setFromX = (clientX) => {
+    const r = lab.current?.getBoundingClientRect()
+    if (!r) return
+    const v = ((clientX - r.left) / r.width) * 100
+    setSplit(Math.max(0, Math.min(100, v)))
+  }
 
   return (
     <div>
-      <div className="type-lab" style={{ '--split': `${split}%` }}>
+      <div
+        className="type-lab"
+        data-cursor="drag"
+        ref={lab}
+        style={{ '--split': `${split}%` }}
+        onPointerDown={(e) => {
+          dragging.current = true
+          e.currentTarget.setPointerCapture(e.pointerId)
+          setFromX(e.clientX)
+        }}
+        onPointerMove={(e) => {
+          if (dragging.current) setFromX(e.clientX)
+        }}
+        onPointerUp={() => {
+          dragging.current = false
+        }}
+        onPointerCancel={() => {
+          dragging.current = false
+        }}
+      >
         <div className="layer layer-a">{c.sample}</div>
         <div className="layer layer-b" aria-hidden="true">
           {c.sample}

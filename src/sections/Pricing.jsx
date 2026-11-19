@@ -39,6 +39,7 @@ export default function Pricing() {
                 <button
                   type="button"
                   className="pick"
+                  data-magnetic
                   aria-pressed={on}
                   onClick={() => setTier(item.id)}
                 >

@@ -103,11 +103,11 @@ export default function Booking() {
                 </div>
               ))}
               <div className="form-actions">
-                <button type="button" className="btn" onClick={copy}>
+                <button type="button" className="btn" data-magnetic onClick={copy}>
                   {c.copy}
                   <span aria-hidden="true">»</span>
                 </button>
-                <a className="btn ghost" href={DISCORD_URL} target="_blank" rel="noreferrer">
+                <a className="btn ghost" data-magnetic href={DISCORD_URL} target="_blank" rel="noreferrer">
                   {c.open}
                   <span aria-hidden="true">↗</span>
                 </a>

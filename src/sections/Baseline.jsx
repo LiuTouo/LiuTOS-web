@@ -49,6 +49,7 @@ export default function Baseline() {
           <p>{c.lead}</p>
         </div>
         <div className="baseline-legend mono">
+          <span />
           <span>{c.colA}</span>
           <span style={{ color: 'var(--mint)' }}>{c.colB}</span>
         </div>

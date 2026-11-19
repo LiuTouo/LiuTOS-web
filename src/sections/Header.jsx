@@ -31,6 +31,7 @@ export default function Header() {
       </nav>
       <button
         className="lang"
+        data-magnetic
         type="button"
         onClick={() => setLang(lang === 'zh' ? 'en' : 'zh')}
         aria-label={lang === 'zh' ? 'Switch to English' : '切換成中文'}

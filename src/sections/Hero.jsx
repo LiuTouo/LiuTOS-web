@@ -1,10 +1,13 @@
 import { useRef } from 'react'
 import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useGSAP } from '@gsap/react'
 import { useSite } from '../site.jsx'
 import { useReducedMotion } from '../lib/useMedia.js'
 
-export default function Hero() {
+gsap.registerPlugin(ScrollTrigger)
+
+export default function Hero({ booted }) {
   const { t } = useSite()
   const root = useRef(null)
   const reduced = useReducedMotion()
@@ -12,22 +15,33 @@ export default function Hero() {
 
   useGSAP(
     () => {
-      if (reduced) return
-      const tl = gsap.timeline({ defaults: { ease: 'power3.out' } })
-      tl.from('.hero-kicker', { opacity: 0, y: 12, duration: 0.6 })
-        .from('.hero h1 .line > span', { yPercent: 112, duration: 1.05, stagger: 0.09 }, 0.1)
-        .from('.hero-lead', { opacity: 0, y: 18, duration: 0.8 }, 0.55)
-        .from('.hero-stats div', { opacity: 0, y: 14, duration: 0.7, stagger: 0.07 }, 0.7)
-        .from('.hero-log', { opacity: 0, duration: 1.1 }, 0.3)
+      if (!booted || reduced) return
+      const tl = gsap.timeline({ defaults: { ease: 'power3.out' }, delay: 0.1 })
+      tl.from('.hero-kicker', { opacity: 0, y: 10, duration: 0.5 })
+        .from(
+          '.hero h1 .ch',
+          { yPercent: 118, duration: 1.1, stagger: 0.035, ease: 'power4.out' },
+          0.08
+        )
+        .from('.hero-lead', { opacity: 0, y: 16, duration: 0.8 }, 0.6)
+        .from('.hero-stats div', { opacity: 0, y: 12, duration: 0.7, stagger: 0.06 }, 0.72)
+        .from('.hero-log', { opacity: 0, duration: 1.1 }, 0.4)
 
-      gsap.to('.hero-log-track', {
-        yPercent: -50,
-        duration: 34,
+      gsap.to('.hero-log-track', { yPercent: -50, duration: 38, ease: 'none', repeat: -1 })
+
+      gsap.to('.hero-log', {
+        yPercent: -14,
         ease: 'none',
-        repeat: -1
+        scrollTrigger: { trigger: root.current, start: 'top top', end: 'bottom top', scrub: 0.6 }
+      })
+      gsap.to('.hero h1', {
+        yPercent: 12,
+        opacity: 0.35,
+        ease: 'none',
+        scrollTrigger: { trigger: root.current, start: 'top top', end: 'bottom top', scrub: 0.5 }
       })
     },
-    { scope: root, dependencies: [reduced] }
+    { scope: root, dependencies: [reduced, booted] }
   )
 
   return (
@@ -42,7 +56,11 @@ export default function Hero() {
             <h1>
               {t.hero.title.map((line, i) => (
                 <span className="line" key={i}>
-                  <span>{line}</span>
+                  {[...line].map((ch, j) => (
+                    <span className="ch" key={j}>
+                      {ch === ' ' ? '\u00A0' : ch}
+                    </span>
+                  ))}
                 </span>
               ))}
             </h1>

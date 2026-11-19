@@ -1,11 +1,12 @@
-import { useMemo, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useGSAP } from '@gsap/react'
 import { useSite } from '../site.jsx'
-import { useMedia } from '../lib/useMedia.js'
+import { useMedia, useReducedMotion } from '../lib/useMedia.js'
 import { scrollToY } from '../lib/scroll.js'
 import { FACTS } from '../facts.js'
+import Marquee from '../components/Marquee.jsx'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -16,10 +17,12 @@ export default function Pipeline() {
   const c = t.pipeline
   const steps = c.steps
   const stage = useRef(null)
+  const stepBox = useRef(null)
   const [active, setActive] = useState(0)
   const [cpu, setCpu] = useState('amd')
   const [openLog, setOpenLog] = useState(-1)
   const isCompact = useMedia('(max-width: 899px)')
+  const reduced = useReducedMotion()
 
   const current = steps[active] ?? steps[0]
 
@@ -43,10 +46,54 @@ export default function Pipeline() {
     { scope: stage, dependencies: [steps.length, lang] }
   )
 
+  useEffect(() => {
+    const box = stepBox.current
+    if (!box) return
+    const el = box.querySelector('.pipe-step.is-active')
+    if (!el) return
+    const lines = el.querySelectorAll('.tlog p')
+    if (reduced) {
+      lines.forEach((p) => {
+        p.textContent = p.dataset.text
+      })
+      return
+    }
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        el,
+        { opacity: 0, y: 18 },
+        { opacity: 1, y: 0, duration: 0.55, ease: 'power3.out' }
+      )
+      const tl = gsap.timeline({ delay: 0.08 })
+      lines.forEach((p) => {
+        p.textContent = ''
+        const full = p.dataset.text || ''
+        const proxy = { n: 0 }
+        tl.to(proxy, {
+          n: full.length,
+          duration: Math.min(0.62, 0.05 + full.length * 0.008),
+          ease: 'none',
+          snap: { n: 1 },
+          onUpdate: () => {
+            p.textContent = full.slice(0, proxy.n)
+          }
+        })
+      })
+      tl.fromTo(
+        '.pipe-panel .pipe-stat',
+        { opacity: 0, x: 8 },
+        { opacity: 1, x: 0, duration: 0.4, stagger: 0.06, ease: 'power2.out' },
+        0.1
+      )
+    }, box)
+    return () => ctx.revert()
+  }, [active, cpu, lang, reduced])
+
   const jump = (index) => {
+    const next = Math.max(0, Math.min(steps.length - 1, index))
     if (isCompact) {
-      setActive(index)
-      const target = stage.current?.querySelectorAll('.pipe-step')[index]
+      setActive(next)
+      const target = stage.current?.querySelectorAll('.pipe-step')[next]
       if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' })
       return
     }
@@ -54,8 +101,8 @@ export default function Pipeline() {
     if (!el) return
     const startScroll = el.getBoundingClientRect().top + window.scrollY
     const range = Math.max(1, el.offsetHeight - window.innerHeight)
-    scrollToY(startScroll + range * ((index + 0.5) / steps.length))
-    setActive(index)
+    scrollToY(startScroll + range * ((next + 0.5) / steps.length))
+    setActive(next)
   }
 
   const panel = useMemo(
@@ -113,7 +160,7 @@ export default function Pipeline() {
   return (
     <section className="pipe" id="pipeline">
       <div className="wrap pipe-head">
-        <div className="sec-head" style={{ marginBottom: 0 }}>
+        <div className="sec-head" style={{ marginBottom: '2.5rem' }}>
           <h2>
             <span className="idx mono">02 / PIPELINE</span>
             <br />
@@ -122,107 +169,130 @@ export default function Pipeline() {
           <p>{c.lead}</p>
         </div>
       </div>
+      <Marquee items={steps.map((s, i) => `${String(i + 1).padStart(2, '0')} ${s.title}`)} duration={46} />
       <div className="pipe-stage" ref={stage} style={{ '--steps': steps.length }}>
         <div className="pipe-inner wrap">
           <div className="pipe-rail">
-              {steps.map((step, i) => (
-                <button
+            {steps.map((step, i) => (
+              <button
+                key={step.code}
+                type="button"
+                aria-current={i === active}
+                onClick={() => jump(i)}
+              >
+                <span className="n">{String(i + 1).padStart(2, '0')}</span>
+                <span className="t">{step.title}</span>
+              </button>
+            ))}
+          </div>
+          <div className="pipe-steps" ref={stepBox}>
+            {steps.map((step, i) => {
+              const logs = Array.isArray(step.logs) ? step.logs : step.logs[cpu]
+              const collapsed = isCompact && openLog !== i
+              return (
+                <article
                   key={step.code}
-                  type="button"
-                  aria-current={i === active}
-                  onClick={() => jump(i)}
+                  className={`pipe-step${i === active ? ' is-active' : ''}`}
+                  aria-current={i === active ? 'step' : undefined}
                 >
-                  <span className="n">{String(i + 1).padStart(2, '0')}</span>
-                  <span className="t">{step.title}</span>
-                </button>
+                  <div className="pipe-step-head mono">
+                    <span className="n">
+                      {c.stepLabel} {String(i + 1).padStart(2, '0')}
+                    </span>
+                    <span className="code">{step.code}</span>
+                  </div>
+                  <h3>{step.title}</h3>
+                  <p className="lead">{step.lead}</p>
+                  <div className={`tlog${collapsed ? ' is-collapsed' : ''}`}>
+                    {logs.map((line, n) => (
+                      <p
+                        key={n}
+                        data-text={line}
+                        className={HIT.test(line) ? 'hit' : undefined}
+                      >
+                        {line}
+                      </p>
+                    ))}
+                  </div>
+                  {isCompact ? (
+                    <button
+                      type="button"
+                      className="tlog-toggle mono"
+                      aria-expanded={!collapsed}
+                      onClick={() => setOpenLog(collapsed ? i : -1)}
+                    >
+                      {collapsed ? t.labels.expand : t.labels.collapse}
+                      <span aria-hidden="true">{collapsed ? '＋' : '－'}</span>
+                    </button>
+                  ) : null}
+                  {step.tags ? (
+                    <ul className="tags">
+                      {step.tags.map((tag) => (
+                        <li key={tag.k}>
+                          <span className="k">{tag.k}</span>
+                          <span className="v">{tag.v}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  ) : null}
+                  {step.list ? (
+                    <ol className="task-list">
+                      {step.list.map((item, n) => (
+                        <li key={item}>
+                          <span className="n">{String(n + 1).padStart(2, '0')}</span>
+                          {item}
+                        </li>
+                      ))}
+                    </ol>
+                  ) : null}
+                  {!step.tags && !step.list ? (
+                    <dl className="facts">
+                      {(FACTS[lang]?.[step.code] ?? []).map(([k, v]) => (
+                        <div key={k}>
+                          <dt>{k}</dt>
+                          <dd>{v}</dd>
+                        </div>
+                      ))}
+                    </dl>
+                  ) : null}
+                </article>
+              )
+            })}
+          </div>
+          {panel}
+          <div className="pipe-foot">
+            <div className="segments" aria-hidden="true">
+              {steps.map((step, i) => (
+                <span key={step.code} className={i <= active ? 'on' : undefined} />
               ))}
             </div>
-            <div className="pipe-steps">
-              {steps.map((step, i) => {
-                const logs = Array.isArray(step.logs) ? step.logs : step.logs[cpu]
-                const collapsed = isCompact && openLog !== i
-                return (
-                  <article
-                    key={step.code}
-                    className={`pipe-step${i === active ? ' is-active' : ''}`}
-                    aria-current={i === active ? 'step' : undefined}
-                  >
-                    <div className="pipe-step-head mono">
-                      <span className="n">
-                        {c.stepLabel} {String(i + 1).padStart(2, '0')}
-                      </span>
-                      <span className="code">{step.code}</span>
-                    </div>
-                    <h3>{step.title}</h3>
-                    <p className="lead">{step.lead}</p>
-                    <div className={`tlog${collapsed ? ' is-collapsed' : ''}`}>
-                      {logs.map((line, n) => (
-                        <p key={n} className={HIT.test(line) ? 'hit' : undefined}>
-                          {line}
-                        </p>
-                      ))}
-                    </div>
-                    {isCompact ? (
-                      <button
-                        type="button"
-                        className="tlog-toggle mono"
-                        aria-expanded={!collapsed}
-                        onClick={() => setOpenLog(collapsed ? i : -1)}
-                      >
-                        {collapsed ? t.labels.expand : t.labels.collapse}
-                        <span aria-hidden="true">{collapsed ? '＋' : '－'}</span>
-                      </button>
-                    ) : null}
-                    {step.tags ? (
-                      <ul className="tags">
-                        {step.tags.map((tag) => (
-                          <li key={tag.k}>
-                            <span className="k">{tag.k}</span>
-                            <span className="v">{tag.v}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    ) : null}
-                    {step.list ? (
-                      <ol className="task-list">
-                        {step.list.map((item, n) => (
-                          <li key={item}>
-                            <span className="n">{String(n + 1).padStart(2, '0')}</span>
-                            {item}
-                          </li>
-                        ))}
-                      </ol>
-                    ) : null}
-                    {!step.tags && !step.list ? (
-                      <dl className="facts">
-                        {(FACTS[lang]?.[step.code] ?? []).map(([k, v]) => (
-                          <div key={k}>
-                            <dt>{k}</dt>
-                            <dd>{v}</dd>
-                          </div>
-                        ))}
-                      </dl>
-                    ) : null}
-                  </article>
-                )
-              })}
-            </div>
-            {panel}
-            <div className="pipe-foot">
-              <div className="segments" aria-hidden="true">
-                {steps.map((step, i) => (
-                  <span key={step.code} className={i <= active ? 'on' : undefined} />
-                ))}
-              </div>
-              <div className="foot-row mono">
-                <span>
-                  {current.code} — {current.title}
-                </span>
-                <span>
+            <div className="foot-row mono">
+              <span>
+                {current.code} — {current.title}
+              </span>
+              <span className="foot-ctrl">
+                <button
+                  type="button"
+                  onClick={() => jump(active - 1)}
+                  disabled={active === 0}
+                  aria-label={lang === 'en' ? 'Previous stage' : '上一步'}
+                >
+                  ←
+                </button>
+                <button
+                  type="button"
+                  onClick={() => jump(active + 1)}
+                  disabled={active === steps.length - 1}
+                  aria-label={lang === 'en' ? 'Next stage' : '下一步'}
+                >
+                  →
+                </button>
+                <span className="foot-note">
                   {c.demoTag} · {c.footNote}
                 </span>
-              </div>
+              </span>
             </div>
+          </div>
         </div>
       </div>
     </section>
