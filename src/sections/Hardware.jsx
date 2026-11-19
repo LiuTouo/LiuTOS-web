@@ -13,7 +13,7 @@ export default function Hardware() {
             <br />
             {c.title}
           </h2>
-          <p>{c.lead}</p>
+          <p data-split>{c.lead}</p>
         </div>
         <div className="hw">
           {c.items.map((item) => (

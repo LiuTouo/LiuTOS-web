@@ -299,7 +299,7 @@ export default function Demos() {
             <br />
             {c.title}
           </h2>
-          <p>{c.lead}</p>
+          <p data-split>{c.lead}</p>
         </div>
         <div className="demos">
           <article className="demo">
@@ -310,7 +310,7 @@ export default function Demos() {
             <div className="demo-body">
               <TextLab />
             </div>
-            <p className="demo-cap">{c.text.caption}</p>
+            <p className="demo-cap" data-split>{c.text.caption}</p>
           </article>
           <article className="demo">
             <div className="demo-head">
@@ -320,7 +320,7 @@ export default function Demos() {
             <div className="demo-body">
               <MouseLab />
             </div>
-            <p className="demo-cap">{c.mouse.caption}</p>
+            <p className="demo-cap" data-split>{c.mouse.caption}</p>
           </article>
         </div>
       </div>

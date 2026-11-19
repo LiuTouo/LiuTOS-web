@@ -14,7 +14,7 @@ export default function Pricing() {
             <br />
             {c.title}
           </h2>
-          <p>{c.lead}</p>
+          <p data-split>{c.lead}</p>
         </div>
         <div className="pricing">
           {c.tiers.map((item) => {

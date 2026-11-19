@@ -5,6 +5,31 @@ import { useReducedMotion } from '../lib/useMedia.js'
 
 gsap.registerPlugin(ScrollTrigger)
 
+const SPLIT = '[data-split]'
+
+function splitWords(el) {
+  if (el.dataset.done) return []
+  el.dataset.done = '1'
+  const raw = el.textContent.trim()
+  const tokens = /[\u3400-\u9fff]/.test(raw) ? Array.from(raw) : raw.split(/(\s+)/)
+  el.setAttribute('aria-label', raw)
+  el.textContent = ''
+  const spans = []
+  tokens.forEach((token) => {
+    if (!token.trim()) {
+      el.appendChild(document.createTextNode(token))
+      return
+    }
+    const span = document.createElement('span')
+    span.className = 'w'
+    span.textContent = token
+    span.setAttribute('aria-hidden', 'true')
+    el.appendChild(span)
+    spans.push(span)
+  })
+  return spans
+}
+
 export default function Motion() {
   const reduced = useReducedMotion()
 
@@ -18,32 +43,66 @@ export default function Motion() {
       })
     }
 
-    if (reduced) return
+    if (reduced) {
+      gsap.utils.toArray(SPLIT).forEach((el) => el.classList.add('is-plain'))
+      return
+    }
+
+    gsap.utils.toArray(SPLIT).forEach((el) => {
+      const spans = splitWords(el)
+      if (!spans.length) return
+      gsap.fromTo(
+        spans,
+        { opacity: 0.16 },
+        {
+          opacity: 1,
+          stagger: 0.02,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: el,
+            start: 'top 88%',
+            end: 'top 52%',
+            scrub: 0.4
+          }
+        }
+      )
+    })
+
+    gsap.utils.toArray('.section, .pipe, .foot').forEach((el) => {
+      gsap.fromTo(
+        el,
+        { '--line': 0 },
+        {
+          '--line': 1,
+          ease: 'none',
+          scrollTrigger: { trigger: el, start: 'top 96%', end: 'top 62%', scrub: 0.4 }
+        }
+      )
+    })
 
     const heads = gsap.utils.toArray('.sec-head h2')
     heads.forEach((el) => {
       gsap.fromTo(
         el,
-        { clipPath: 'inset(0 0 108% 0)', yPercent: 14 },
+        { clipPath: 'inset(0 0 108% 0)', yPercent: 16 },
         {
           clipPath: 'inset(0 0 0% 0)',
           yPercent: 0,
-          duration: 1.1,
+          duration: 1.25,
           ease: 'power4.out',
           scrollTrigger: { trigger: el, start: 'top 90%', once: true }
         }
       )
     })
 
-    const leads = gsap.utils.toArray('.sec-head p')
-    leads.forEach((el) => {
+    gsap.utils.toArray('.sec-head p').forEach((el) => {
       gsap.fromTo(
         el,
-        { opacity: 0, y: 18 },
+        { opacity: 0, y: 22 },
         {
           opacity: 1,
           y: 0,
-          duration: 0.9,
+          duration: 1,
           ease: 'power3.out',
           scrollTrigger: { trigger: el, start: 'top 92%', once: true }
         }
@@ -59,33 +118,19 @@ export default function Motion() {
       onEnter: (batch) =>
         gsap.fromTo(
           batch,
-          { opacity: 0, y: 20 },
-          { opacity: 1, y: 0, duration: 0.75, stagger: 0.07, ease: 'power3.out' }
+          { opacity: 0, y: 28 },
+          { opacity: 1, y: 0, duration: 0.9, stagger: 0.09, ease: 'power3.out' }
         )
-    })
-
-    const masks = gsap.utils.toArray('.mask-inner')
-    masks.forEach((el) => {
-      gsap.fromTo(
-        el,
-        { yPercent: 108 },
-        {
-          yPercent: 0,
-          duration: 1.05,
-          ease: 'power4.out',
-          scrollTrigger: { trigger: el.parentElement, start: 'top 92%', once: true }
-        }
-      )
     })
 
     const magnet = gsap.utils.toArray('[data-magnetic]')
     const cleanups = magnet.map((el) => {
-      const xTo = gsap.quickTo(el, 'x', { duration: 0.5, ease: 'power3' })
-      const yTo = gsap.quickTo(el, 'y', { duration: 0.5, ease: 'power3' })
+      const xTo = gsap.quickTo(el, 'x', { duration: 0.55, ease: 'power3' })
+      const yTo = gsap.quickTo(el, 'y', { duration: 0.55, ease: 'power3' })
       const onMove = (e) => {
         const r = el.getBoundingClientRect()
-        xTo((e.clientX - (r.left + r.width / 2)) * 0.22)
-        yTo((e.clientY - (r.top + r.height / 2)) * 0.3)
+        xTo((e.clientX - (r.left + r.width / 2)) * 0.24)
+        yTo((e.clientY - (r.top + r.height / 2)) * 0.32)
       }
       const onLeave = () => {
         xTo(0)

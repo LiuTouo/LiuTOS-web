@@ -78,6 +78,16 @@ export default function Pipeline() {
           }
         })
       })
+      gsap.fromTo(
+        '.pipe-sweep',
+        { scaleX: 0, opacity: 0.9 },
+        { scaleX: 1, opacity: 0, duration: 0.9, ease: 'power2.inOut' }
+      )
+      gsap.fromTo(
+        '.panel-ghost',
+        { yPercent: 26, opacity: 0 },
+        { yPercent: 0, opacity: 1, duration: 0.7, ease: 'power3.out', delay: 0.1 }
+      )
       tl.fromTo(
         '.pipe-panel .pipe-stat',
         { opacity: 0, x: 8 },
@@ -165,7 +175,7 @@ export default function Pipeline() {
             <br />
             {c.title}
           </h2>
-          <p>{c.lead}</p>
+          <p data-split>{c.lead}</p>
         </div>
       </div>
       <Marquee items={steps.map((s, i) => `${String(i + 1).padStart(2, '0')} ${s.title}`)} duration={46} />
@@ -256,6 +266,7 @@ export default function Pipeline() {
             })}
           </div>
           {panel}
+          <span className="pipe-sweep" aria-hidden="true" />
           <div className="pipe-foot">
             <div className="segments" aria-hidden="true">
               {steps.map((step, i) => (

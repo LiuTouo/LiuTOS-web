@@ -20,7 +20,7 @@ export default function HandsOff() {
             <br />
             {c.title}
           </h2>
-          <p>{c.lead}</p>
+          <p data-split>{c.lead}</p>
         </div>
         <div className="hands">
           <div>

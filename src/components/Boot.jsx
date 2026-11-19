@@ -75,12 +75,9 @@ export default function Boot({ onDone }) {
     } catch {}
     const el = root.current
     if (!el) return onDone()
-    gsap.to(el, {
-      clipPath: 'inset(0 0 100% 0)',
-      duration: 0.65,
-      ease: 'power4.inOut',
-      onComplete: onDone
-    })
+    gsap.to('.boot-half-top', { yPercent: -100, duration: 0.95, ease: 'power4.inOut' })
+    gsap.to('.boot-half-bottom', { yPercent: 100, duration: 0.95, ease: 'power4.inOut' })
+    gsap.to(el, { backgroundColor: 'rgba(22,26,25,0)', duration: 0.4, delay: 0.5, onComplete: onDone })
     gsap.to(el.querySelector('.boot-inner'), { y: -24, opacity: 0, duration: 0.4 })
   }
 
@@ -88,6 +85,8 @@ export default function Boot({ onDone }) {
 
   return (
     <div className="boot" ref={root} aria-hidden="true">
+      <div className="boot-half boot-half-top" />
+      <div className="boot-half boot-half-bottom" />
       <div className="boot-inner">
         <div className="boot-head mono">
           <span>{t.hero.kicker}</span>

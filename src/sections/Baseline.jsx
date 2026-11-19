@@ -46,7 +46,7 @@ export default function Baseline() {
             <br />
             {c.title}
           </h2>
-          <p>{c.lead}</p>
+          <p data-split>{c.lead}</p>
         </div>
         <div className="baseline-legend mono">
           <span />
@@ -62,7 +62,7 @@ export default function Baseline() {
             </div>
           ))}
         </div>
-        <p className="baseline-note mono">{c.note}</p>
+        <p className="baseline-note mono" data-split>{c.note}</p>
       </div>
     </section>
   )

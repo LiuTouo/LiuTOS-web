@@ -53,7 +53,7 @@ function Shell() {
       setLenis(null)
       return
     }
-    const lenis = new Lenis({ duration: 1.05, wheelMultiplier: 1, touchMultiplier: 1, anchors: true })
+    const lenis = new Lenis({ duration: 1.35, wheelMultiplier: 0.92, touchMultiplier: 1.2, anchors: true })
     setLenis(lenis)
     lenis.on('scroll', ScrollTrigger.update)
     let raf = 0

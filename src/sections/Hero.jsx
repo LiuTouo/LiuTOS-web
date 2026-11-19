@@ -39,10 +39,23 @@ export default function Hero({ delay = 0.1 }) {
         scrollTrigger: { trigger: root.current, start: 'top top', end: 'bottom top', scrub: 0.6 }
       })
       gsap.to('.hero h1', {
-        yPercent: 12,
-        opacity: 0.35,
+        yPercent: 14,
+        scale: 0.93,
+        letterSpacing: '-0.06em',
+        opacity: 0.3,
         ease: 'none',
-        scrollTrigger: { trigger: root.current, start: 'top top', end: 'bottom top', scrub: 0.5 }
+        scrollTrigger: { trigger: root.current, start: 'top top', end: 'bottom top', scrub: 0.6 }
+      })
+      gsap.to('.hero-lead', {
+        yPercent: -18,
+        opacity: 0.4,
+        ease: 'none',
+        scrollTrigger: { trigger: root.current, start: 'top top', end: 'bottom top', scrub: 0.4 }
+      })
+      gsap.to('.hero-stats', {
+        yPercent: -34,
+        ease: 'none',
+        scrollTrigger: { trigger: root.current, start: 'top top', end: 'bottom top', scrub: 0.3 }
       })
     },
     { scope: root, dependencies: [reduced, delay] }
@@ -68,7 +81,7 @@ export default function Hero({ delay = 0.1 }) {
                 </span>
               ))}
             </h1>
-            <p className="hero-lead">{t.hero.lead}</p>
+            <p className="hero-lead" data-split>{t.hero.lead}</p>
           </div>
           <div className="hero-log" aria-hidden="true">
             <div className="hero-log-track">
