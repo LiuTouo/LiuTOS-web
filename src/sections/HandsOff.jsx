@@ -76,7 +76,7 @@ export default function HandsOff() {
                   {item.file}
                   <small>{item.note}</small>
                 </span>
-                <span className="st mono">{pressed.includes(i) ? 'OK' : 'RUN'}</span>
+                <span className="st mono">{pressed.includes(i) ? t.labels.done : t.labels.todo}</span>
               </button>
             ))}
           </div>

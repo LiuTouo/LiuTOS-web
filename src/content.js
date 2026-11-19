@@ -17,192 +17,156 @@ export const content = {
     langLabel: 'EN',
     brand: '流特',
     nav: [
-      { id: 'pipeline', label: '工序' },
-      { id: 'demos', label: '實測' },
+      { id: 'pipeline', label: '流程' },
+      { id: 'demos', label: '差異' },
       { id: 'hardware', label: '硬體' },
       { id: 'pricing', label: '價目' },
       { id: 'booking', label: '預約' }
     ],
     hero: {
       kicker: '系統重灌 · 深度優化 · 交機驗收',
-      title: ['十道工序，', '三次點擊。'],
+      title: ['十道工序，', '一次交機。'],
       lead:
-        '從乾淨的 Windows 安裝，到最後一項 registry 值。中間由腳本執行，你只需要按三次。交機時留下的是低延遲、精簡、跟你的使用習慣。',
+        '從乾淨的 Windows 到最後一項設定，都由我處理。你只要確認方案、告訴我哪些軟體要留，最後驗收。',
       scroll: '往下',
       stats: [
         { v: '10', k: '道工序' },
-        { v: '3', k: '次點擊' },
-        { v: '2', k: '支腳本可還原原廠值' }
+        { v: '3', k: '次確認' },
+        { v: '2', k: '種方案' }
       ],
       log: [
-        'reg add "HKLM\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Multimedia\\SystemProfile" /v SystemResponsiveness /t REG_DWORD /d 1 /f',
-        'reg add "HKLM\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Multimedia\\SystemProfile\\Tasks\\Games" /v "GPU Priority" /t REG_DWORD /d 8 /f',
-        'reg add "HKLM\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Multimedia\\SystemProfile\\Tasks\\Low Latency" /v "Priority" /t REG_DWORD /d 8 /f',
-        'reg add "HKCU\\Control Panel\\Mouse" /v MouseSpeed /t REG_SZ /d 0 /f',
-        'sc config diagsvc start= disabled',
-        'powercfg -import "LiuT_AMD_PowerPlan.pow"',
-        'reg add "HKLM\\SYSTEM\\CurrentControlSet\\Services\\Tcpip6\\Parameters" /v DisabledComponents /t REG_DWORD /d 255 /f',
-        'set TaskbarAl=1',
-        'set Hidden=2',
-        'DISM /Online /Cleanup-Image /StartComponentCleanup /ResetBase'
+        '預裝軟體 0 項',
+        '背景常駐 已精簡',
+        '遊戲排程 前景優先',
+        '網路節流 關閉',
+        '滑鼠加速 關閉',
+        '電源計畫 依平台',
+        '字型渲染 已接管',
+        '顯卡 僅安裝驅動',
+        '隱私選項 已關閉',
+        '系統設定 可還原',
+        '系統更新 只留安全',
+        '驅動 不自動覆蓋',
+        '暫存 已清理',
+        '右鍵選單 已整理',
+        '開始選單 已整理',
+        '深色模式 已套用',
+        '還原點 已建立',
+        '電源 高效能',
+        '工作列 已置中',
+        '小工具 已移除',
+        '開機項目 已精簡',
+        '磁碟 已清理',
+        '首頁與相簿 已移除',
+        '通知 已整理'
       ]
     },
     baseline: {
-      title: '原廠預設，不是為你調過的',
-      lead: '同一台機器，差別在幾個數字和幾個啟動類型。以下是實際寫入的值。',
-      colA: '原廠預設',
+      title: '一般重灌，跟交機後的差別',
+      lead: '同一台機器。差別在你開機後看到什麼、玩遊戲時感覺到什麼。',
+      colA: '一般重灌 / 原廠',
       colB: 'LiuTOS 交機',
       rows: [
-        { name: '遙測與背景服務', a: 'DiagTrack 執行中，百餘項服務 Automatic', b: 'DiagTrack 停用，其餘改為需要時才啟動' },
-        { name: '多媒體排程', a: 'SystemResponsiveness = 20', b: 'SystemResponsiveness = 1' },
-        { name: '網路節流', a: 'NetworkThrottlingIndex = 10', b: 'NetworkThrottlingIndex = 0xFFFFFFFF' },
-        { name: '滑鼠輸入', a: '兩段加速曲線', b: 'MouseSpeed = 0，位移 1:1' }
+        { name: '開機與待機', a: '廠商預裝與背景服務一堆，風扇一直轉', b: '只留必要的，其餘需要時才啟動，待機安靜' },
+        { name: '遊戲時的資源', a: '背景程式跟遊戲平均分資源', b: '遊戲與前景優先，背景工作排到後面' },
+        { name: '網路與輸入', a: '系統節流開著，滑鼠有加速曲線', b: '節流關閉，滑鼠位移 1:1' },
+        { name: '你拿到手的', a: '一堆要自己關的設定與內建廣告', b: '照你的習慣設定好，直接開機就能用' }
       ],
-      note: '以上 registry 值取自實際執行輸出。效能差異依硬體、遊戲與驅動版本而異，本頁不放你還沒實測過的幀數。'
+      note: '以上是交機後的實際設定方向。體感差異依硬體、遊戲與驅動版本而異，本頁放的是可驗證的設定，不是編出來的幀數。'
     },
     pipeline: {
       title: '十道工序',
-      lead: '滾動看每一步實際寫入什麼。左邊點編號可跳步。',
+      lead: '往下滑看每一道在改什麼、你會感覺到什麼。左邊點編號可跳段。',
       stepLabel: '工序',
-      panelLabel: '系統狀態',
+      panelLabel: '交機狀態',
       demoTag: '示意',
-      footNote: '實際值依硬體與驅動版本而異',
+      footNote: '實際感受依硬體與遊戲而異',
       steps: [
         {
           code: 'SYS',
+          feel: ['開機沒有預裝軟體在跑', '不用自己關廣告與推薦', '授權狀態交機前就確認好'],
           title: '系統與授權',
-          lead: '乾淨的 Windows 11 從 ISO 寫入開始。完成 OOBE 後只做授權開通，不加任何預裝項目。',
-          logs: [
-            '> 寫入 Windows 11 映像至 USB',
-            '> 完成 OOBE，略過推薦項目與廣告',
-            '> 授權狀態：已開通',
-            '> 停用自動驅動安裝（Windows Update）'
-          ],
+          lead: '用官方映像重寫一套乾淨的 Windows 11。開機後沒有廠商預裝、沒有試用版軟體，只做授權開通。',
+          logs: ['› 預裝軟體 0 項', '› 系統來源 官方映像', '› 授權狀態 已開通', '› 自動安裝驅動 關閉'],
           stats: [
             { k: '預裝項目', v: '0' },
-            { k: '系統來源', v: '官方 ISO' }
+            { k: '系統來源', v: '官方映像' }
           ]
         },
         {
           code: 'PB',
-          title: 'LiuTOS playbook',
-          lead: '以 playbook 套用系統精簡：遙測、Defender 常駐、Edge 元件、AppX 一次處理，過程留下可還原紀錄。',
-          logs: [
-            '> 套用 LiuTOS playbook（overhaul）',
-            '> registry 精簡 6,736 筆',
-            '> AppX 移除 · 服務停用 · 遙測關閉',
-            '> 建立還原點',
-            '> 完成，差異報告留存'
-          ],
+          feel: ['待機時風扇不亂轉', '工作管理員看不到一堆背景程式', '要用的功能還在，只是不常駐'],
+          title: '系統精簡',
+          lead: '關掉用不到的功能、廣告與背景回報。系統只留你真正會用的部分，開機與待機都變安靜。',
+          logs: ['› 遙測與回報 已關閉', '› 廣告與推薦 已移除', '› 背景常駐 大幅減少', '› 還原點 已建立'],
           stats: [
-            { k: 'registry 筆數', v: '6,736' },
+            { k: '遙測', v: '關閉' },
             { k: '還原', v: '可回滾' }
           ]
         },
         {
-          code: 'OPT',
-          title: 'Optimizer：只跑兩支',
-          lead: '兩支 cmd，一支管排程優先權，一支管節流與遙測。兩支都帶 revert，能把值還原成原廠。',
-          logs: [
-            '> LiuT-PerfTweaks.cmd',
-            '> reg add "HKLM\\...\\Multimedia\\SystemProfile" /v SystemResponsiveness /d 1',
-            '> reg add "HKLM\\...\\Tasks\\Games" /v "GPU Priority" /d 8',
-            '> reg add "HKLM\\...\\Tasks\\Low Latency" /v "Priority" /d 8',
-            '> LiuT-PerfExtras.cmd',
-            '> reg add "HKLM\\...\\SystemProfile" /v NetworkThrottlingIndex /d 4294967295',
-            '> 完成。MMCSS 需重開機生效'
-          ],
-          tags: [
-            { k: 'MMCSS', v: 'SystemResponsiveness 20 → 1' },
-            { k: 'Games 排程', v: 'GPU 8 · Priority 6 · High' },
-            { k: 'Low Latency', v: 'Priority 8 · SFIO High' },
-            { k: '網路節流', v: 'NetworkThrottlingIndex 關閉' }
-          ],
+          code: 'PERF',
+          feel: ['遊戲時背景程式自動讓路', '關機不用等計時器', '網路不再被系統節流'],
+          title: '效能排程',
+          lead: '系統預設把資源平均分給所有程式。這裡改成遊戲與前景優先，背景工作自動讓路。',
+          logs: ['› 前景優先權 遊戲', '› 背景工作 延後', '› 網路節流 關閉', '› 關機等待 縮短'],
           stats: [
-            { k: '腳本', v: '2 支' },
-            { k: 'revert', v: '內建' }
+            { k: '遊戲排程', v: '前景優先' },
+            { k: '還原', v: '可回原廠' }
           ]
         },
         {
-          code: 'WU',
-          title: 'WinUtil：你按一次',
-          lead: '一支 winutil-selected-apply.cmd，按一次跑完九件事，每一步回報成功或失敗。',
-          logs: [
-            '> [1] %TEMP% 與 %SystemRoot%\\Temp 清除',
-            '> [2] Explorer 自動探索停用（Bags / BagMRU）',
-            '> [3] Widgets 移除 · explorer 重啟',
-            '> [4] DisabledComponents=255 · Teredo 停用',
-            '> [5] Edge 原則 16 項',
-            '> [9] DISM /ResetBase',
-            '> 全部完成，失敗步驟：0'
-          ],
+          code: 'SET',
+          feel: ['開機後不用再自己關一輪設定', '檔案總管與右鍵乾淨', '常用資料夾開啟更快'],
+          title: '隱私與介面',
+          lead: '暫存清理、隱私選項、檔案總管與介面設定一次處理完，不會留半套給你自己補。',
           list: [
-            '暫存檔清除',
-            'Explorer 自動探索停用',
-            'Widgets 移除',
-            'IPv6 / Teredo / 優先 IPv4 合併為 255',
-            'Edge 原則 16 項',
-            'Home 與 Gallery 從 Explorer 移除',
-            '深色主題',
-            'O&O ShutUp10++',
-            'DISM /ResetBase'
+            '暫存與垃圾檔案清理',
+            '遙測與廣告回報關閉',
+            '檔案總管顯示整理',
+            '工作列與開始選單整理',
+            '深色模式',
+            '系統更新只留安全更新',
+            '驅動不自動覆蓋',
+            '右鍵與檔案總管加快',
+            '不必要的背景元件移除'
           ],
+          logs: ['› 暫存與垃圾 已清理', '› 隱私選項 已關閉', '› 介面設定 已整理', '› 更新 只留安全更新'],
           stats: [
-            { k: '你的操作', v: '1 次' },
-            { k: '失敗步驟', v: '0' }
+            { k: '設定項目', v: '一次到位' },
+            { k: '半套設定', v: '0' }
           ]
         },
         {
           code: 'GPU',
-          title: '顯卡：乾淨安裝',
-          lead: 'NVCleanstall 只裝驅動本體。GeForce Experience、Telemetry、覆疊層、多餘音訊與 USB-C 元件一律不裝。',
-          logs: [
-            '> 移除既有 NVIDIA 套件',
-            '> 安裝：Display Driver',
-            '> 不安裝：GeForce Experience · Telemetry · Overlay',
-            '> 不安裝：多餘音訊與 USB-C 元件',
-            '> 重新開機'
-          ],
+          feel: ['沒有 GeForce Experience 常駐', '驅動更新不會塞進附加程式', '開機少一個常駐項目'],
+          title: '顯卡乾淨安裝',
+          lead: '只裝顯示驅動本體。GeForce Experience、遙測、覆疊層、多餘的音訊與 USB-C 元件全部不裝。',
+          logs: ['› 舊驅動 已移除', '› 安裝內容 僅顯示驅動', '› 附加程式 不安裝', '› 常駐程式 0'],
           stats: [
-            { k: '安裝元件', v: '僅驅動' },
+            { k: '安裝內容', v: '僅驅動' },
             { k: '常駐程式', v: '0' }
           ]
         },
         {
           code: 'NV',
-          title: '顯卡：全域設定',
-          lead: 'LiuT.nip 匯入 NVIDIA Profile Inspector，一次套到全域設定檔，不用逐款遊戲點。',
-          logs: [
-            '> nvidiaProfileInspector · 匯入 LiuT.nip',
-            '> 電源管理：最高效能',
-            '> 低延遲模式 · 垂直同步 · 預先渲染影格',
-            '> 套用至 _GLOBAL_DRIVER_PROFILE',
-            '> 重新啟動顯示驅動'
-          ],
+          feel: ['每款遊戲不用重複設定', '更新驅動後設定還在', '所有遊戲同一套手感'],
+          title: '顯卡全域設定',
+          lead: '一次套用到所有遊戲的設定，不用為了每一款遊戲重新點一遍，更新後也不會被覆蓋掉。',
+          logs: ['› 電源管理 最高效能', '› 低延遲 開啟', '› 垂直同步 統一', '› 套用範圍 所有遊戲'],
           stats: [
             { k: '套用範圍', v: '全域' },
-            { k: '設定檔', v: 'LiuT.nip' }
+            { k: '逐款設定', v: '不需要' }
           ]
         },
         {
           code: 'PWR',
-          title: '電源計畫：看你的 CPU',
-          lead: '依平台匯入對應的 .pow。AMD 與 Intel 的升頻、核心停放與延遲容忍行為不同，同一份計畫套兩邊會互相拖累。',
+          feel: ['升頻反應符合你的平台', '待機不亂省電降頻', '耗電與溫度取平衡'],
+          title: '電源計畫',
+          lead: '依你的 CPU 平台套用對應的電源計畫。AMD 與 Intel 的核心調度方式不同，同一份套在兩邊會互相拖累。',
           logs: {
-            amd: [
-              '> assoc .pow → powercfg -import',
-              '> 匯入 LiuT_AMD_PowerPlan.pow',
-              '> powercfg /setactive',
-              '> 延遲容忍與核心停放依 CCD 行為調整',
-              '> 完成，重開機生效'
-            ],
-            intel: [
-              '> assoc .pow → powercfg -import',
-              '> 匯入 LiuT_Intel_PowerPlan.pow',
-              '> powercfg /setactive',
-              '> 延遲容忍與核心停放依 P/E 核心調整',
-              '> 完成，重開機生效'
-            ]
+            amd: ['› 平台 AMD', '› 計畫 客製高效能', '› 升頻與核心停放 依平台調整', '› 套用 開機生效'],
+            intel: ['› 平台 Intel', '› 計畫 客製高效能', '› 升頻與核心停放 依平台調整', '› 套用 開機生效']
           },
           variant: {
             label: '你的平台',
@@ -210,72 +174,59 @@ export const content = {
               { id: 'amd', label: 'AMD' },
               { id: 'intel', label: 'Intel' }
             ],
-            note: '同一支 doubleclicktousepow.bat 匯入，差別在挑哪一份檔案。'
+            note: '同一套流程，差別在挑哪一份計畫。'
           },
           stats: [
-            { k: '計畫', v: '客製 .pow' },
-            { k: '套用方式', v: '一鍵匯入' }
+            { k: '計畫', v: '客製' },
+            { k: '切回原廠', v: '可' }
           ]
         },
         {
           code: 'TXT',
-          title: '文字：重畫一次',
-          lead: '換掉系統預設的字型優先序，改由 MacType 接管字形渲染。同樣字級下，中文邊緣與英文字距都不是原本那樣。',
-          logs: [
-            '> noMeiryoUI · 系統字型覆寫',
-            '> MacType · 接管 GDI 渲染',
-            '> 描邊與 gamma 校正',
-            '> 登出後全域生效'
-          ],
+          feel: ['字邊緣更清楚', '長時間看螢幕較不吃力', '中英混排更好讀'],
+          title: '字型與渲染',
+          lead: '重畫系統的文字渲染。同樣字級下，中文邊緣與英文間距都更清楚，長時間看螢幕比較不吃力。',
+          logs: ['› 系統字型 已替換', '› 文字渲染 已接管', '› 套用範圍 全系統', '› 生效 重新登入後'],
           stats: [
-            { k: '渲染', v: 'MacType 接管' },
-            { k: '範圍', v: '全系統' }
+            { k: '範圍', v: '全系統' },
+            { k: '還原', v: '可' }
           ]
         },
         {
           code: 'MSE',
-          title: '滑鼠：拿掉加速',
-          lead: '關閉增強指標精確度與 Windows 的兩段加速曲線。滑鼠位移與畫面位移回到 1:1。',
-          logs: [
-            '> HKCU\\Control Panel\\Mouse',
-            '> MouseSpeed / MouseThreshold1 / MouseThreshold2 = 0',
-            '> MouseAccel / MouseAccel_Scale / MouseAccel_Max = 0',
-            '> 登出後生效'
-          ],
+          feel: ['手移動多少畫面就多少', '定位更直覺', '習慣後更穩'],
+          title: '滑鼠手感',
+          lead: '關閉系統的滑鼠加速。手移動多少，畫面就移動多少，習慣之後定位更穩、更直覺。',
+          logs: ['› 滑鼠加速 關閉', '› 位移曲線 1:1', '› 套用範圍 全系統', '› 生效 重新登入後'],
           stats: [
-            { k: '曲線', v: '線性 1:1' },
-            { k: '生效', v: '登出後' }
+            { k: '加速', v: '關閉' },
+            { k: '曲線', v: '1:1' }
           ]
         },
         {
-          code: 'LAST',
-          title: '收尾：你的習慣',
-          lead: 'LiuTCustomLastSet.bat 三件事：工作列置中、隱藏項目關閉、開始資料夾加入「設定」。改完自動重啟 explorer。',
-          logs: [
-            '> TaskbarAl = 1（工作列置中）',
-            '> Hidden = 2（不顯示隱藏項目）',
-            '> Start\\VisiblePlaces += Settings GUID',
-            '> 重啟 explorer 與 StartMenuExperienceHost',
-            '> 全部 3 項處理完畢'
-          ],
+          code: 'YOU',
+          feel: ['介面就是你習慣的樣子', '要改隨時可以', '不用重新學'],
+          title: '你的使用習慣',
+          lead: '收尾調整成你習慣的樣子。工作列、檔案總管、開始選單先問過你，不硬塞我的偏好。',
+          logs: ['› 工作列 依你的習慣', '› 檔案總管 依你的習慣', '› 開始選單 加入常用項目', '› 套用 立即生效'],
           stats: [
-            { k: '設定項', v: '3' },
-            { k: '重啟', v: '自動' }
+            { k: '調整項目', v: '依個人' },
+            { k: '之後要改', v: '隨時' }
           ]
         }
       ]
     },
     handsOff: {
-      title: '作業很多，操作很少',
-      lead: '重量不是工作量。整套流程裡需要你按下去的，只有這三支。',
-      counter: '你的操作',
-      total: '工序',
-      hint: '點完三格，剩下的交給腳本。',
-      done: '三支都按完了。系統在那邊等重開機。',
+      title: '你只要做三件事',
+      lead: '技術細節我處理，你不用碰任何設定，也不用學任何工具。',
+      counter: '你的確認',
+      total: '進度',
+      hint: '三件事都完成，就可以開機驗收。',
+      done: '都完成了。剩下交給我。',
       items: [
-        { file: 'LiuT-PerfTweaks.cmd', note: '多媒體排程優先權' },
-        { file: 'LiuT-PerfExtras.cmd', note: '節流、遙測、還原點' },
-        { file: 'winutil-selected-apply.cmd', note: '九件事一次做完' }
+        { file: '確認方案', note: '重灌或單純優化，含要不要加購' },
+        { file: '列出要保留的軟體與資料', note: '我照清單處理，不用你自己備份' },
+        { file: '交機驗收', note: '當場跑你的遊戲或程式，確認手感' }
       ]
     },
     demos: {
@@ -284,7 +235,7 @@ export const content = {
       text: {
         title: '文字渲染',
         before: '原廠渲染',
-        after: 'MacType 接管後',
+        after: '調整後',
         sample: '這一行的中英混排 LiuTOS 2026 邊緣與字距，拖曳中間那條線比較。',
         caption: '示意：以瀏覽器渲染模擬兩者的邊緣差異，實際效果依字型、DPI 與螢幕而異。'
       },
@@ -292,29 +243,30 @@ export const content = {
         title: '滑鼠加速',
         on: '加速開啟',
         off: '加速關閉',
-        caption: '同一段手部移動。加速開啟時慢速段被縮小、快速段被放大，落點偏移；關閉後位移與畫面 1:1。'
+        caption:
+          '同一段手部移動。加速開啟時慢速段被縮小、快速段被放大，落點偏移；關閉後位移與畫面 1:1。'
       }
     },
     hardware: {
       title: '顯卡與電源，分開處理',
-      lead: '這三塊不是勾選清單，是依你的 CPU 與顯卡走不同分支。',
+      lead: '這三塊不是勾選清單，是依你的顯卡與 CPU 走不同設定。',
       items: [
         {
           n: '01',
-          title: '乾淨安裝',
-          body: 'NVCleanstall 只勾驅動本體，其餘全部不裝。',
-          list: ['不安裝 GeForce Experience', '不安裝 Telemetry', '不安裝覆疊層', '不安裝多餘音訊與 USB-C 元件']
+          title: '顯卡乾淨安裝',
+          body: '只裝顯示驅動本體，其餘一律不裝。',
+          list: ['不裝 GeForce Experience', '不裝遙測', '不裝覆疊層', '不裝多餘音訊與 USB-C 元件']
         },
         {
           n: '02',
-          title: '全域設定檔',
-          body: 'nvidiaProfileInspector 匯入 LiuT.nip，一次套到全域。',
+          title: '顯卡全域設定',
+          body: '一次套用到所有遊戲，不用逐款點。',
           list: ['電源管理：最高效能', '低延遲模式', '垂直同步', '預先渲染影格']
         },
         {
           n: '03',
           title: '電源計畫',
-          body: '依 CPU 平台選 .pow，不是一份套全部。',
+          body: '依 CPU 平台選計畫，不是一份套全部。',
           list: ['AMD：依 CCD 行為調整', 'Intel：依 P/E 核心調整', '核心停放與延遲容忍', '一鍵匯入，可切回原廠']
         }
       ]
@@ -340,15 +292,28 @@ export const content = {
           id: 'tune',
           name: '不重灌優化',
           steps: '02 — 10',
-          desc: '跳過第 1 步。系統、資料、已裝程式全部保留，其餘九道工序照跑。',
-          includes: ['LiuTOS playbook 精簡', 'Optimizer 兩支腳本', 'WinUtil 一次點擊', '顯卡乾淨安裝與全域設定', '客製電源計畫', '文字渲染、滑鼠、收尾設定']
+          desc: '跳過第 1 步。系統、資料、已裝程式全部保留，其餘九道照做。',
+          includes: [
+            '系統精簡',
+            '效能排程',
+            '隱私與介面設定',
+            '顯卡乾淨安裝與全域設定',
+            '客製電源計畫',
+            '字型、滑鼠、使用習慣'
+          ]
         },
         {
           id: 'full',
           name: '全套重灌',
           steps: '01 — 10',
-          desc: '從 ISO 寫入與授權開通開始，十道工序跑完整套。',
-          includes: ['含不重灌優化的全部內容', 'Windows 11 ISO 寫入', '授權開通', 'OOBE 與驅動基線', '交機驗收'],
+          desc: '從乾淨的 Windows 安裝與授權開始，十道工序跑完整套。',
+          includes: [
+            '含不重灌優化的全部內容',
+            'Windows 11 安裝與授權',
+            '開機基線與驅動',
+            '十道工序完整執行',
+            '交機驗收'
+          ],
           featured: true
         }
       ],
@@ -387,14 +352,16 @@ export const content = {
       preview: '訊息預覽'
     },
     footer: {
-      line: '十道工序，三次點擊。',
+      line: '十道工序，一次交機。',
       disclaimer:
-        '本頁 registry 值取自實際執行輸出。幀數、延遲與體感差異依硬體、遊戲與驅動版本而異，不做保證。',
+        '本頁描述交機後的設定方向與實測值。效能與體感差異依硬體、遊戲與驅動版本而異，不做保證。',
       contact: 'Discord'
     },
     labels: {
-      expand: '展開紀錄',
-      collapse: '收合紀錄'
+      expand: '展開內容',
+      collapse: '收合內容',
+      todo: '未完成',
+      done: '完成'
     }
   },
 
@@ -410,184 +377,148 @@ export const content = {
     ],
     hero: {
       kicker: 'CLEAN INSTALL · DEEP TUNING · HANDOVER',
-      title: ['Ten stages.', 'Three clicks.'],
+      title: ['Ten stages.', 'One handover.'],
       lead:
-        'From a bare Windows install to the last registry value. The work runs as scripts. You press three buttons. What ships is a lean system with low input latency, already shaped around how you use it.',
+        'From a clean Windows install to the last setting, I handle all of it. You confirm the plan, tell me what to keep, and check the result.',
       scroll: 'Scroll',
       stats: [
         { v: '10', k: 'stages' },
-        { v: '3', k: 'clicks' },
-        { v: '2', k: 'scripts with revert' }
+        { v: '3', k: 'confirmations' },
+        { v: '2', k: 'plans' }
       ],
       log: [
-        'reg add "HKLM\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Multimedia\\SystemProfile" /v SystemResponsiveness /t REG_DWORD /d 1 /f',
-        'reg add "HKLM\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Multimedia\\SystemProfile\\Tasks\\Games" /v "GPU Priority" /t REG_DWORD /d 8 /f',
-        'reg add "HKLM\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Multimedia\\SystemProfile\\Tasks\\Low Latency" /v "Priority" /t REG_DWORD /d 8 /f',
-        'reg add "HKCU\\Control Panel\\Mouse" /v MouseSpeed /t REG_SZ /d 0 /f',
-        'sc config diagsvc start= disabled',
-        'powercfg -import "LiuT_Intel_PowerPlan.pow"',
-        'reg add "HKLM\\SYSTEM\\CurrentControlSet\\Services\\Tcpip6\\Parameters" /v DisabledComponents /t REG_DWORD /d 255 /f',
-        'set TaskbarAl=1',
-        'set Hidden=2',
-        'DISM /Online /Cleanup-Image /StartComponentCleanup /ResetBase'
+        'preloaded apps 0',
+        'background load trimmed',
+        'game scheduling foreground',
+        'network throttling off',
+        'mouse acceleration off',
+        'power plan per platform',
+        'text rendering replaced',
+        'GPU driver only',
+        'privacy options off',
+        'settings reversible',
+        'updates security only',
+        'drivers not auto-replaced',
+        'temp files cleared',
+        'context menu cleaned',
+        'start menu organised',
+        'dark mode applied',
+        'restore point created',
+        'power high performance',
+        'taskbar centered',
+        'widgets removed',
+        'startup items trimmed',
+        'disk cleaned',
+        'home and gallery removed',
+        'notifications arranged'
       ]
     },
     baseline: {
-      title: 'Stock Windows was not tuned for you',
-      lead: 'Same machine. The difference is a handful of values and a few startup types. These are the actual writes.',
-      colA: 'Stock',
-      colB: 'LiuTOS',
+      title: 'A standard reinstall vs. this handover',
+      lead: 'Same machine. The difference is what you see at boot and what you feel in a match.',
+      colA: 'Standard / stock',
+      colB: 'LiuTOS handover',
       rows: [
-        { name: 'Telemetry & background services', a: 'DiagTrack running, 100+ services Automatic', b: 'DiagTrack disabled, rest move to on-demand' },
-        { name: 'Multimedia scheduling', a: 'SystemResponsiveness = 20', b: 'SystemResponsiveness = 1' },
-        { name: 'Network throttling', a: 'NetworkThrottlingIndex = 10', b: 'NetworkThrottlingIndex = 0xFFFFFFFF' },
-        { name: 'Mouse input', a: 'Two-step acceleration curve', b: 'MouseSpeed = 0, 1:1 movement' }
+        { name: 'Boot and idle', a: 'Vendor apps and background services everywhere', b: 'Only what is needed, the rest waits until used' },
+        { name: 'Resources in game', a: 'Background apps still get their share', b: 'Games and foreground win, background yields' },
+        { name: 'Network and input', a: 'System throttling on, mouse acceleration on', b: 'Throttling off, movement 1:1' },
+        { name: 'What you receive', a: 'A pile of settings to turn off yourself', b: 'Set up around your habits, ready at boot' }
       ],
-      note: 'Values above come from real output. Gains vary by hardware, title and driver. This page shows no FPS number you have not measured yourself.'
+      note: 'These are the actual settings shipped. Perceived gains vary by hardware, title and driver. This page shows verifiable settings, not invented FPS numbers.'
     },
     pipeline: {
       title: 'Ten stages',
-      lead: 'Scroll to see what each stage actually writes. Click a number on the left to jump.',
+      lead: 'Scroll to see what each stage changes and what you will feel. Click a number to jump.',
       stepLabel: 'Stage',
-      panelLabel: 'System state',
+      panelLabel: 'Handover state',
       demoTag: 'illustrative',
-      footNote: 'values vary by hardware and driver',
+      footNote: 'feel depends on hardware and title',
       steps: [
         {
           code: 'SYS',
+          feel: ['No preloaded apps at boot', 'No ads to switch off yourself', 'License confirmed before handover'],
           title: 'Install & license',
-          lead: 'A clean Windows 11 written from ISO. After OOBE, licensing only. No preloaded extras.',
-          logs: [
-            '> Write Windows 11 image to USB',
-            '> Finish OOBE, skip recommendations and ads',
-            '> License status: activated',
-            '> Disable automatic driver installation (Windows Update)'
-          ],
+          lead: 'A clean Windows 11 written from the official image. No vendor apps, no trial software, licensing only.',
+          logs: ['› preloaded apps 0', '› image source official', '› license activated', '› auto driver install off'],
           stats: [
-            { k: 'Preloaded extras', v: '0' },
-            { k: 'Image source', v: 'Official ISO' }
+            { k: 'Preloaded', v: '0' },
+            { k: 'Source', v: 'official' }
           ]
         },
         {
           code: 'PB',
-          title: 'LiuTOS playbook',
-          lead: 'A playbook strips the base system: telemetry, Defender resident load, Edge components, AppX. Every run leaves a record and stays reversible.',
-          logs: [
-            '> Apply LiuTOS playbook (overhaul)',
-            '> 6,736 registry entries trimmed',
-            '> AppX removed · services disabled · telemetry off',
-            '> Restore point created',
-            '> Done, diff report kept'
-          ],
+          feel: ['Fans stay quiet at idle', 'Task Manager is not crowded', 'The features you use still work'],
+          title: 'System trim',
+          lead: 'Telemetry, recommendations and background reporting turned off. Only what you actually use stays, so boot and idle get quiet.',
+          logs: ['› telemetry off', '› ads and recommendations removed', '› background load much lower', '› restore point created'],
           stats: [
-            { k: 'Registry entries', v: '6,736' },
-            { k: 'Rollback', v: 'Available' }
+            { k: 'Telemetry', v: 'off' },
+            { k: 'Rollback', v: 'available' }
           ]
         },
         {
-          code: 'OPT',
-          title: 'Optimizer: two scripts',
-          lead: 'Two cmds. One handles scheduler priority, one handles throttling and telemetry. Both carry a revert path back to stock values.',
-          logs: [
-            '> LiuT-PerfTweaks.cmd',
-            '> reg add "HKLM\\...\\Multimedia\\SystemProfile" /v SystemResponsiveness /d 1',
-            '> reg add "HKLM\\...\\Tasks\\Games" /v "GPU Priority" /d 8',
-            '> reg add "HKLM\\...\\Tasks\\Low Latency" /v "Priority" /d 8',
-            '> LiuT-PerfExtras.cmd',
-            '> reg add "HKLM\\...\\SystemProfile" /v NetworkThrottlingIndex /d 4294967295',
-            '> Done. MMCSS applies after reboot'
-          ],
-          tags: [
-            { k: 'MMCSS', v: 'SystemResponsiveness 20 → 1' },
-            { k: 'Games task', v: 'GPU 8 · Priority 6 · High' },
-            { k: 'Low Latency', v: 'Priority 8 · SFIO High' },
-            { k: 'Throttling', v: 'NetworkThrottlingIndex off' }
-          ],
+          code: 'PERF',
+          feel: ['Background apps yield in game', 'Shutdown does not wait on timers', 'Network is not throttled'],
+          title: 'Performance scheduling',
+          lead: 'Stock Windows shares resources evenly. This gives games and foreground priority and pushes background work back.',
+          logs: ['› foreground priority games', '› background work deferred', '› network throttling off', '› shutdown wait shortened'],
           stats: [
-            { k: 'Scripts', v: '2' },
-            { k: 'Revert', v: 'Built in' }
+            { k: 'Scheduling', v: 'foreground' },
+            { k: 'Rollback', v: 'to stock' }
           ]
         },
         {
-          code: 'WU',
-          title: 'WinUtil: one click',
-          lead: 'One winutil-selected-apply.cmd. One press runs nine tasks in order and reports each one.',
-          logs: [
-            '> [1] Clear %TEMP% and %SystemRoot%\\Temp',
-            '> [2] Disable Explorer auto discovery (Bags / BagMRU)',
-            '> [3] Remove Widgets · restart explorer',
-            '> [4] DisabledComponents=255 · Teredo off',
-            '> [5] 16 Edge policies',
-            '> [9] DISM /ResetBase',
-            '> All done, failed steps: 0'
-          ],
+          code: 'SET',
+          feel: ['No settings left for you to finish', 'Explorer and context menu stay clean', 'Folders open faster'],
+          title: 'Privacy and interface',
+          lead: 'Temp files, privacy options, Explorer and interface settings handled in one pass. Nothing left half done for you to finish.',
           list: [
-            'Temp file cleanup',
-            'Explorer auto discovery off',
-            'Widgets removed',
-            'IPv6 / Teredo / prefer IPv4 merged into 255',
-            '16 Edge policies',
-            'Home and Gallery removed from Explorer',
-            'Dark theme',
-            'O&O ShutUp10++',
-            'DISM /ResetBase'
+            'Temp and junk cleanup',
+            'Telemetry and ad reporting off',
+            'Explorer display cleaned up',
+            'Taskbar and Start organised',
+            'Dark mode',
+            'Security updates only',
+            'Drivers not auto-replaced',
+            'Faster context menu and Explorer',
+            'Unneeded background components removed'
           ],
+          logs: ['› temp and junk cleared', '› privacy options off', '› interface set up', '› updates security only'],
           stats: [
-            { k: 'Your input', v: 'one press' },
-            { k: 'Failed steps', v: '0' }
+            { k: 'Settings', v: 'one pass' },
+            { k: 'Half-done', v: '0' }
           ]
         },
         {
           code: 'GPU',
-          title: 'GPU: clean install',
-          lead: 'NVCleanstall installs the display driver and nothing else. No GeForce Experience, no telemetry, no overlay, no extra audio or USB-C packages.',
-          logs: [
-            '> Remove existing NVIDIA packages',
-            '> Install: Display Driver',
-            '> Skip: GeForce Experience · Telemetry · Overlay',
-            '> Skip: extra audio and USB-C components',
-            '> Reboot'
-          ],
+          feel: ['No GeForce Experience resident', 'Driver updates bring no extras', 'One less startup item'],
+          title: 'Clean GPU install',
+          lead: 'The display driver only. No GeForce Experience, no telemetry, no overlay, no extra audio or USB-C packages.',
+          logs: ['› old drivers removed', '› install display driver only', '› extras skipped', '› resident apps 0'],
           stats: [
-            { k: 'Components', v: 'driver only' },
-            { k: 'Resident apps', v: '0' }
+            { k: 'Installed', v: 'driver only' },
+            { k: 'Resident', v: '0' }
           ]
         },
         {
           code: 'NV',
-          title: 'GPU: global profile',
-          lead: 'LiuT.nip goes into NVIDIA Profile Inspector once, at the global level. No clicking through each game.',
-          logs: [
-            '> nvidiaProfileInspector · import LiuT.nip',
-            '> Power management: prefer maximum performance',
-            '> Low latency · V-Sync · pre-rendered frames',
-            '> Apply to _GLOBAL_DRIVER_PROFILE',
-            '> Restart display driver'
-          ],
+          feel: ['No per-game setup', 'Settings survive driver updates', 'Same feel everywhere'],
+          title: 'Global GPU profile',
+          lead: 'One profile applied to every game. No clicking through each title, and updates do not overwrite it.',
+          logs: ['› power management max performance', '› low latency on', '› V-Sync consistent', '› scope all games'],
           stats: [
             { k: 'Scope', v: 'global' },
-            { k: 'Profile', v: 'LiuT.nip' }
+            { k: 'Per-game setup', v: 'none' }
           ]
         },
         {
           code: 'PWR',
-          title: 'Power plan: depends on your CPU',
-          lead: 'The matching .pow gets imported per platform. AMD and Intel differ in boost, core parking and latency tolerance. One plan applied to both fights itself.',
+          feel: ['Boost matches your platform', 'No aggressive power saving at idle', 'Balance of power and temperature'],
+          title: 'Power plan',
+          lead: 'The plan follows your CPU platform. AMD and Intel schedule cores differently, and one plan applied to both fights itself.',
           logs: {
-            amd: [
-              '> assoc .pow → powercfg -import',
-              '> Import LiuT_AMD_PowerPlan.pow',
-              '> powercfg /setactive',
-              '> Latency tolerance and core parking tuned for CCD',
-              '> Done, reboot to apply'
-            ],
-            intel: [
-              '> assoc .pow → powercfg -import',
-              '> Import LiuT_Intel_PowerPlan.pow',
-              '> powercfg /setactive',
-              '> Latency tolerance and core parking tuned for P/E cores',
-              '> Done, reboot to apply'
-            ]
+            amd: ['› platform AMD', '› plan custom performance', '› boost and parking tuned', '› applies at boot'],
+            intel: ['› platform Intel', '› plan custom performance', '› boost and parking tuned', '› applies at boot']
           },
           variant: {
             label: 'Your platform',
@@ -595,72 +526,59 @@ export const content = {
               { id: 'amd', label: 'AMD' },
               { id: 'intel', label: 'Intel' }
             ],
-            note: 'Same doubleclicktousepow.bat imports either file. Only the source file differs.'
+            note: 'Same process, different plan file.'
           },
           stats: [
-            { k: 'Plan', v: 'custom .pow' },
-            { k: 'Apply', v: 'one import' }
+            { k: 'Plan', v: 'custom' },
+            { k: 'Back to stock', v: 'yes' }
           ]
         },
         {
           code: 'TXT',
-          title: 'Text: redrawn',
-          lead: 'The system font fallback order gets replaced and MacType takes over glyph rendering. At the same size, CJK edges and Latin spacing are not what they were.',
-          logs: [
-            '> noMeiryoUI · system font override',
-            '> MacType · take over GDI rendering',
-            '> Stem and gamma correction',
-            '> Applies system-wide after sign-out'
-          ],
+          feel: ['Clearer glyph edges', 'Easier on the eyes over hours', 'Better CJK and Latin mix'],
+          title: 'Text rendering',
+          lead: 'System text rendering is redrawn. At the same size, CJK edges and Latin spacing are clearer, which is easier on the eyes over long sessions.',
+          logs: ['› system font replaced', '› rendering replaced', '› scope system-wide', '› applies after sign-in'],
           stats: [
-            { k: 'Rendering', v: 'MacType' },
-            { k: 'Scope', v: 'system-wide' }
+            { k: 'Scope', v: 'system-wide' },
+            { k: 'Rollback', v: 'yes' }
           ]
         },
         {
           code: 'MSE',
-          title: 'Mouse: acceleration off',
-          lead: 'Enhanced pointer precision and the two-step Windows curve are removed. Pointer movement and screen movement go back to 1:1.',
-          logs: [
-            '> HKCU\\Control Panel\\Mouse',
-            '> MouseSpeed / MouseThreshold1 / MouseThreshold2 = 0',
-            '> MouseAccel / MouseAccel_Scale / MouseAccel_Max = 0',
-            '> Applies after sign-out'
-          ],
+          feel: ['Hand movement equals screen movement', 'More direct pointing', 'Steadier once used to it'],
+          title: 'Mouse feel',
+          lead: 'System mouse acceleration is removed. Hand moves what the screen moves, so aiming settles once you get used to it.',
+          logs: ['› acceleration off', '› curve 1:1', '› scope system-wide', '› applies after sign-in'],
           stats: [
-            { k: 'Curve', v: 'linear 1:1' },
-            { k: 'Apply', v: 'after sign-out' }
+            { k: 'Acceleration', v: 'off' },
+            { k: 'Curve', v: '1:1' }
           ]
         },
         {
-          code: 'LAST',
-          title: 'Last: your habits',
-          lead: 'LiuTCustomLastSet.bat does three things: taskbar centered, hidden items off, Settings pinned into the Start folders list. Explorer restarts itself.',
-          logs: [
-            '> TaskbarAl = 1 (taskbar centered)',
-            '> Hidden = 2 (hide hidden items)',
-            '> Start\\VisiblePlaces += Settings GUID',
-            '> Restart explorer and StartMenuExperienceHost',
-            '> All 3 items done'
-          ],
+          code: 'YOU',
+          feel: ['Interface matches your habits', 'Change it anytime', 'Nothing new to learn'],
+          title: 'Your habits',
+          lead: 'The last pass shapes the system around how you work. Taskbar, Explorer and Start are set after asking you, not forced.',
+          logs: ['› taskbar per your habits', '› explorer per your habits', '› start shortcuts added', '› applies immediately'],
           stats: [
-            { k: 'Items', v: '3' },
-            { k: 'Restart', v: 'automatic' }
+            { k: 'Items', v: 'personal' },
+            { k: 'Change later', v: 'anytime' }
           ]
         }
       ]
     },
     handsOff: {
-      title: 'Plenty of work. Three clicks.',
-      lead: 'Weight is not workload. These three are the only things you press in the whole run.',
-      counter: 'Your input',
-      total: 'Stages',
-      hint: 'Three boxes, then the scripts take it.',
-      done: 'All three pressed. The system is waiting on a reboot.',
+      title: 'You only do three things',
+      lead: 'I handle the technical side. You do not touch any setting or learn any tool.',
+      counter: 'Your part',
+      total: 'progress',
+      hint: 'Three items done, then we boot and check.',
+      done: 'All done. The rest is on me.',
       items: [
-        { file: 'LiuT-PerfTweaks.cmd', note: 'scheduler priority' },
-        { file: 'LiuT-PerfExtras.cmd', note: 'throttling, telemetry, restore points' },
-        { file: 'winutil-selected-apply.cmd', note: 'nine tasks at once' }
+        { file: 'Confirm the plan', note: 'Reinstall or tuning only, plus add-ons' },
+        { file: 'List software and data to keep', note: 'I work from your list, no backup needed from you' },
+        { file: 'Handover check', note: 'Run your game or app on the spot' }
       ]
     },
     demos: {
@@ -669,7 +587,7 @@ export const content = {
       text: {
         title: 'Text rendering',
         before: 'Stock rendering',
-        after: 'After MacType',
+        after: 'Adjusted',
         sample: 'CJK and Latin in one line, LiuTOS 2026 edges and spacing. Drag the divider.',
         caption: 'Illustrative: browser rendering stands in for both edges. Real result depends on font, DPI and panel.'
       },
@@ -677,29 +595,30 @@ export const content = {
         title: 'Mouse acceleration',
         on: 'Acceleration on',
         off: 'Acceleration off',
-        caption: 'One hand movement, replayed twice. With acceleration the slow part shrinks and the fast part overshoots. Off, movement and screen stay 1:1.'
+        caption:
+          'One hand movement, replayed twice. With acceleration the slow part shrinks and the fast part overshoots. Off, movement and screen stay 1:1.'
       }
     },
     hardware: {
       title: 'GPU and power, handled apart',
-      lead: 'These three are branches, not a checklist. They follow your CPU and GPU.',
+      lead: 'These three are branches, not a checklist. They follow your GPU and CPU.',
       items: [
         {
           n: '01',
-          title: 'Clean install',
-          body: 'NVCleanstall gets the display driver only.',
-          list: ['No GeForce Experience', 'No telemetry', 'No overlay', 'No extra audio or USB-C components']
+          title: 'Clean GPU install',
+          body: 'The display driver only, nothing else.',
+          list: ['No GeForce Experience', 'No telemetry', 'No overlay', 'No extra audio or USB-C']
         },
         {
           n: '02',
-          title: 'Global profile',
-          body: 'nvidiaProfileInspector imports LiuT.nip at the global level.',
+          title: 'Global GPU profile',
+          body: 'Applied to every game, once.',
           list: ['Power management: max performance', 'Low latency mode', 'V-Sync', 'Pre-rendered frames']
         },
         {
           n: '03',
           title: 'Power plan',
-          body: 'The .pow follows your CPU platform.',
+          body: 'The plan follows your CPU platform.',
           list: ['AMD: tuned for CCD behaviour', 'Intel: tuned for P/E cores', 'Core parking and latency tolerance', 'One import, reversible']
         }
       ]
@@ -726,14 +645,27 @@ export const content = {
           name: 'Tuning only',
           steps: '02 — 10',
           desc: 'Stage 1 skipped. System, data and installed apps stay. The other nine stages run.',
-          includes: ['LiuTOS playbook trim', 'Both Optimizer scripts', 'One WinUtil pass', 'Clean GPU install and global profile', 'Custom power plan', 'Text, mouse and habit settings']
+          includes: [
+            'System trim',
+            'Performance scheduling',
+            'Privacy and interface',
+            'Clean GPU install and profile',
+            'Custom power plan',
+            'Text, mouse, your habits'
+          ]
         },
         {
           id: 'full',
           name: 'Full reinstall',
           steps: '01 — 10',
-          desc: 'Starts at the ISO write and the license, then runs all ten.',
-          includes: ['Everything in Tuning only', 'Windows 11 ISO write', 'License activation', 'OOBE and driver baseline', 'Handover verification'],
+          desc: 'Starts at a clean Windows install and license, then runs all ten.',
+          includes: [
+            'Everything in Tuning only',
+            'Windows 11 install and license',
+            'Boot baseline and drivers',
+            'All ten stages',
+            'Handover check'
+          ],
           featured: true
         }
       ],
@@ -772,14 +704,16 @@ export const content = {
       preview: 'Message preview'
     },
     footer: {
-      line: 'Ten stages. Three clicks.',
+      line: 'Ten stages. One handover.',
       disclaimer:
-        'Registry values on this page come from real output. FPS, latency and perceived smoothness vary by hardware, title and driver version. No guarantee is made.',
+        'This page describes the settings shipped and their measured values. Performance and feel vary by hardware, title and driver version. No guarantee is made.',
       contact: 'Discord'
     },
     labels: {
-      expand: 'Show log',
-      collapse: 'Hide log'
+      expand: 'Show details',
+      collapse: 'Hide details',
+      todo: 'pending',
+      done: 'done'
     }
   }
 }

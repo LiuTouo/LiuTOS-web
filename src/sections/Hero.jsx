@@ -7,16 +7,16 @@ import { useReducedMotion } from '../lib/useMedia.js'
 
 gsap.registerPlugin(ScrollTrigger)
 
-export default function Hero({ booted }) {
+export default function Hero({ delay = 0.1 }) {
   const { t } = useSite()
   const root = useRef(null)
   const reduced = useReducedMotion()
-  const lines = [...t.hero.log, ...t.hero.log]
+  const lines = t.hero.log
 
   useGSAP(
     () => {
-      if (!booted || reduced) return
-      const tl = gsap.timeline({ defaults: { ease: 'power3.out' }, delay: 0.1 })
+      if (reduced) return
+      const tl = gsap.timeline({ defaults: { ease: 'power3.out' }, delay })
       tl.from('.hero-kicker', { opacity: 0, y: 10, duration: 0.5 })
         .from(
           '.hero h1 .ch',
@@ -27,7 +27,11 @@ export default function Hero({ booted }) {
         .from('.hero-stats div', { opacity: 0, y: 12, duration: 0.7, stagger: 0.06 }, 0.72)
         .from('.hero-log', { opacity: 0, duration: 1.1 }, 0.4)
 
-      gsap.to('.hero-log-track', { yPercent: -50, duration: 38, ease: 'none', repeat: -1 })
+      tl.from(
+        '.hero-log-track span',
+        { opacity: 0, x: 10, duration: 0.5, stagger: 0.018, ease: 'power2.out' },
+        0.5
+      )
 
       gsap.to('.hero-log', {
         yPercent: -14,
@@ -41,7 +45,7 @@ export default function Hero({ booted }) {
         scrollTrigger: { trigger: root.current, start: 'top top', end: 'bottom top', scrub: 0.5 }
       })
     },
-    { scope: root, dependencies: [reduced, booted] }
+    { scope: root, dependencies: [reduced, delay] }
   )
 
   return (

@@ -5,12 +5,11 @@ import { useGSAP } from '@gsap/react'
 import { useSite } from '../site.jsx'
 import { useMedia, useReducedMotion } from '../lib/useMedia.js'
 import { scrollToY } from '../lib/scroll.js'
-import { FACTS } from '../facts.js'
 import Marquee from '../components/Marquee.jsx'
 
 gsap.registerPlugin(ScrollTrigger)
 
-const HIT = /(SystemResponsiveness|DisabledComponents|MouseSpeed|TaskbarAl|GPU Priority|NetworkThrottlingIndex|授權|Activated|activated|完成)/
+const HIT = /(已|關閉|1:1|off)/
 
 export default function Pipeline() {
   const { t, lang } = useSite()
@@ -214,6 +213,13 @@ export default function Pipeline() {
                       </p>
                     ))}
                   </div>
+                  {step.feel ? (
+                    <ul className="feel">
+                      {step.feel.map((line) => (
+                        <li key={line}>{line}</li>
+                      ))}
+                    </ul>
+                  ) : null}
                   {isCompact ? (
                     <button
                       type="button"
@@ -244,16 +250,6 @@ export default function Pipeline() {
                         </li>
                       ))}
                     </ol>
-                  ) : null}
-                  {!step.tags && !step.list ? (
-                    <dl className="facts">
-                      {(FACTS[lang]?.[step.code] ?? []).map(([k, v]) => (
-                        <div key={k}>
-                          <dt>{k}</dt>
-                          <dd>{v}</dd>
-                        </div>
-                      ))}
-                    </dl>
                   ) : null}
                 </article>
               )

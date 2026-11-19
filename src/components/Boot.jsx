@@ -4,12 +4,12 @@ import { useSite } from '../site.jsx'
 import { useReducedMotion } from '../lib/useMedia.js'
 
 const LINES = [
-  'mount image /sources/install.esd',
-  'apply playbook · 6,736 keys',
-  'scheduler · systemresponsiveness = 1',
-  'input · mousespeed = 0',
-  'gpu · LiuT.nip · global profile',
-  'power · min state · core parking',
+  'hardware and storage check',
+  'clean system image',
+  'trim background load',
+  'scheduling and input',
+  'gpu and power plan',
+  'personal settings pass',
   'ready'
 ]
 
@@ -39,17 +39,17 @@ export default function Boot({ onDone }) {
       const tl = gsap.timeline()
       tl.to(count.current, {
         textContent: 100,
-        duration: 1.15,
+        duration: 0.95,
         snap: { textContent: 1 },
         ease: 'none'
       })
-      tl.fromTo(bar.current, { scaleX: 0 }, { scaleX: 1, duration: 1.15, ease: 'none' }, 0)
+      tl.fromTo(bar.current, { scaleX: 0 }, { scaleX: 1, duration: 0.95, ease: 'none' }, 0)
       tl.from(
         '.boot-line',
         { opacity: 0, y: 8, duration: 0.24, stagger: 0.13, ease: 'power2.out' },
         0.05
       )
-      tl.add(finish, 1.42)
+      tl.add(finish, 1.12)
     }, root)
     return () => ctx.revert()
   }, [show, reduced, onDone])
@@ -77,7 +77,7 @@ export default function Boot({ onDone }) {
     if (!el) return onDone()
     gsap.to(el, {
       clipPath: 'inset(0 0 100% 0)',
-      duration: 0.75,
+      duration: 0.65,
       ease: 'power4.inOut',
       onComplete: onDone
     })

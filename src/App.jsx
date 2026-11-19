@@ -42,7 +42,7 @@ function Shell() {
       return
     }
     document.body.classList.add('is-booting')
-    const t = setTimeout(onBootDone, 2600)
+    const t = setTimeout(onBootDone, 2400)
     return () => clearTimeout(t)
   }, [booted, onBootDone])
 
@@ -86,7 +86,7 @@ function Shell() {
       <Cursor />
       <Header />
       <main>
-        <Hero booted={booted} />
+        <Hero delay={booted ? 0.1 : 0.75} />
         <Baseline />
         <Pipeline />
         <HandsOff />
