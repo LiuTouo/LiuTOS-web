@@ -3,7 +3,7 @@ import Lenis from 'lenis'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { SiteProvider, useSite } from './site.jsx'
-import { scrollToY, setLenis } from './lib/scroll.js'
+import { setLenis } from './lib/scroll.js'
 import Boot from './components/Boot.jsx'
 import Cursor from './components/Cursor.jsx'
 import Motion from './components/Motion.jsx'
@@ -34,14 +34,29 @@ function Shell() {
   const onBootDone = useCallback(() => setBooted(true), [])
 
   useEffect(() => {
-    const id = window.location.hash.slice(1)
-    if (!id) return
-    const t = setTimeout(() => {
-      const target = document.getElementById(id)
-      if (target) scrollToY(target.getBoundingClientRect().top + window.scrollY - 20)
-    }, 260)
-    return () => clearTimeout(t)
+    history.scrollRestoration = 'manual'
+    if (window.location.hash) {
+      history.replaceState(null, '', window.location.pathname + window.location.search)
+    }
+    let interacted = false
+    const mark = () => {
+      interacted = true
+    }
+    const toTop = () => {
+      if (!interacted) window.scrollTo(0, 0)
+    }
+    ;['wheel', 'touchstart', 'keydown', 'pointerdown', 'mousedown'].forEach((name) =>
+      window.addEventListener(name, mark, { once: true, passive: true })
+    )
+    toTop()
+    const timers = [180, 500, 1400, 2600].map((ms) => setTimeout(toTop, ms))
+    window.addEventListener('load', toTop)
+    return () => {
+      timers.forEach(clearTimeout)
+      window.removeEventListener('load', toTop)
+    }
   }, [])
+
 
   useEffect(() => {
     if (booted) {

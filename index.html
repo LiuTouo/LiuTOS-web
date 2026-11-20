@@ -2,6 +2,10 @@
 <html lang="zh-Hant">
   <head>
     <meta charset="UTF-8" />
+    <script>
+      history.scrollRestoration = 'manual'
+      if (location.hash) history.replaceState(null, '', location.pathname + location.search)
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>LiuTOS｜系統重灌與深度優化</title>
     <meta name="description" content="十道工序，三次點擊。從乾淨的 Windows 安裝到最後一項 registry 設定，留下低延遲、精簡、符合你習慣的系統。不重灌優化 NTD 3,500，全套重灌 NTD 5,000。" />
